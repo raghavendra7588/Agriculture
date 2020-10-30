@@ -1,5 +1,5 @@
 export class AgricultureForm {
-	fpo?: string;
+    fpo?: string;
     firstName?: string;
     lastName?: string;
     dob?: string;
@@ -33,4 +33,7 @@ export class AgricultureForm {
     trollies?: string;
     permanentLabour?: string;
     temporaryLabour?: string;
+    liveStockDetails?: string;
+    FaceBookDetails?: string;
+    FaceBookID?: string;
 }

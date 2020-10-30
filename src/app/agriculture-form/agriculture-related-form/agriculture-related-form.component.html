@@ -1,6 +1,6 @@
 <form [formGroup]="saveAgricultureForm" autocomplete="off">
   <div class="container-fluid mt-4">
-    <h3 class="font-weight-bold">Registered with FPO</h3>
+    <h3 class="font-weight-bold">Your FPO Name</h3>
     <div class="row">
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
@@ -25,8 +25,8 @@
       </div>
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field class="example-full-width" style="width: 100%;">
-          <mat-label>Choose a date</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dob"  [(ngModel)]="agricultureForm.dob">
+          <mat-label>Date Of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob" [(ngModel)]="agricultureForm.dob">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -51,7 +51,7 @@
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Mobile No" type="text" formControlName="mobileno" [maxLength]="maxLengthPhone"
-            [(ngModel)]="agricultureForm.mobileNo">
+            [(ngModel)]="agricultureForm.mobileNo" appNumber>
         </mat-form-field>
       </div>
 
@@ -73,7 +73,7 @@
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Pin Code" type="text" formControlName="pincode" (focusout)="getPinCode()"
-            [maxLength]="maxLengthPinCode" [(ngModel)]="agricultureForm.pincode">
+            [maxLength]="maxLengthPinCode" [(ngModel)]="agricultureForm.pincode" appNumber>
         </mat-form-field>
       </div>
 
@@ -107,7 +107,23 @@
             readonly>
         </mat-form-field>
       </div>
+      <div class="col-md-3 col-3 col-sm-3">
+      <mat-form-field style="width:100%;">
+        <mat-select placeholder="Facebook ID Present" formControlName="facebookselect"
+          [(ngModel)]="agricultureForm.FaceBookDetails">
+          <mat-option *ngFor="let item of facebookData;" [value]="item.title" (click)="selectedFacebookFromList(item)">
+            {{item.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+    <div class="col-md-3 col-3 col-sm-3">
+      <mat-form-field style="width: 100%;">
+        <input matInput placeholder="Facebook ID" type="text" formControlName="facebook" [(ngModel)]="agricultureForm.FaceBookID">
+      </mat-form-field>
     </div>
+</div>
+
   </div>
 
   <div class="container-fluid">
@@ -120,14 +136,19 @@
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
-        <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Well" type="text" formControlName="well" [(ngModel)]="agricultureForm.well">
+        <!-- <mat-form-field style="width: 100%;">
+          <input matInput placeholder="Well / Vihir" type="text" formControlName="well" [(ngModel)]="agricultureForm.well">
+        </mat-form-field> -->
+
+        <mat-form-field style="width:100%;">
+          <mat-select placeholder="Well / Vihir" formControlName="well" [(ngModel)]="agricultureForm.well">
+            <mat-option *ngFor="let item of well;" [value]="item.title" (click)="selectedWellFromList(item)">
+              {{item.title}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
-        <!--  <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Water Level" type="text" formControlName="waterlevel" [(ngModel)]="agricultureForm.waterLevel">
-              </mat-form-field> -->
 
         <mat-form-field style="width:100%;">
           <mat-select placeholder="Water Level" formControlName="waterlevel"
@@ -160,19 +181,19 @@
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Number Of Times in Year" formControlName="nooftimesinyear" type="text"
-            [(ngModel)]="agricultureForm.noOfTimesInYear">
+            [(ngModel)]="agricultureForm.noOfTimesInYear" appNumber>
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Major Crop" type="text" formControlName="majorcrop"
-            [(ngModel)]="agricultureForm.majorCrop">
+          <input matInput placeholder="Major Crops" type="text" formControlName="majorcrop"
+            [(ngModel)]="agricultureForm.majorCrop" appNumber>
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Minor / small Crop" formControlName="minorcrop" type="text"
-            [(ngModel)]="agricultureForm.minorCrop">
+          <input matInput placeholder="Minor / Small Crops" formControlName="minorcrop" type="text"
+            [(ngModel)]="agricultureForm.minorCrop" appNumber>
         </mat-form-field>
       </div>
     </div>
@@ -181,27 +202,27 @@
 
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Major Crop Area" formControlName="majorcroparea" type="text"
-            [(ngModel)]="agricultureForm.majorCropArea">
+          <input matInput placeholder="Major Crops Area (In Guntha)" formControlName="majorcroparea" type="text"
+            [(ngModel)]="agricultureForm.majorCropArea" appNumber>
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Small Crop Area" formControlName="smallcroparea" type="text"
-            [(ngModel)]="agricultureForm.smallCropArea">
+          <input matInput placeholder="Small Crops Area (In Guntha)" formControlName="smallcroparea" type="text"
+            [(ngModel)]="agricultureForm.smallCropArea" appNumber>
         </mat-form-field>
       </div>
 
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Major Crop Output" formControlName="majorcropoutput" type="text"
-            [(ngModel)]="agricultureForm.majorCropOutput">
+          <input matInput placeholder="Major Crops Output (In Ton)" formControlName="majorcropoutput" type="text"
+            [(ngModel)]="agricultureForm.majorCropOutput" appNumber>
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Small Crop Output" formControlName="smallcropoutput" type="text"
-            [(ngModel)]="agricultureForm.smallCropOutput">
+          <input matInput placeholder="Small Crops Output (In Ton)" formControlName="smallcropoutput" type="text"
+            [(ngModel)]="agricultureForm.smallCropOutput" appNumber>
         </mat-form-field>
       </div>
     </div>
@@ -211,30 +232,51 @@
     <h3 class="font-weight-bold">Infrastructure</h3>
     <div class="row">
       <div class="col-md-3 col-3 col-sm-3">
-        <mat-form-field style="width: 100%;">
+        <!-- <mat-form-field style="width: 100%;">
           <input matInput placeholder="Live Stock" formControlName="livestock" type="text"
             [(ngModel)]="agricultureForm.liveStock" appNumber>
+        </mat-form-field> -->
+
+
+        <mat-form-field style="width:100%;">
+          <mat-select placeholder="Live Stock" formControlName="livestock" [(ngModel)]="agricultureForm.liveStock">
+            <mat-option *ngFor="let item of liveStock;" [value]="item.title" (click)="selectedLiveStockFromList(item)">
+              {{item.title}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
+
+      <div class="col-md-3 col-3 col-sm-3">
+        <mat-form-field style="width: 100%;">
+          <input matInput placeholder="Live Stock Details" formControlName="livestocksdetails" type="text"
+            [(ngModel)]="agricultureForm.liveStockDetails" appNumber>
+        </mat-form-field>
+      </div>
+
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Tractor" formControlName="tractor" type="text"
             [(ngModel)]="agricultureForm.tractor">
         </mat-form-field>
       </div>
+
+
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Make" formControlName="make" type="text" [(ngModel)]="agricultureForm.make">
         </mat-form-field>
       </div>
+
+    </div>
+
+    <div class="row">
+
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Model" formControlName="model" type="text" [(ngModel)]="agricultureForm.model">
         </mat-form-field>
       </div>
-    </div>
-
-    <div class="row">
 
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
@@ -252,7 +294,7 @@
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Trolly Count" formControlName="trollies" type="text"
-            [(ngModel)]="agricultureForm.trollies">
+            [(ngModel)]="agricultureForm.trollies" appNumber>
         </mat-form-field>
       </div>
     </div>
@@ -262,15 +304,15 @@
     <h3 class="font-weight-bold">Manpower</h3>
 
     <div class="row">
-      <div class="col-md-4 col-sm-4 col-4">
+      <div class="col-md-3 col-sm-4 col-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Permanent Labour" type="number" formControlName="permanentlabour" type="text"
-            [(ngModel)]="agricultureForm.permanentLabour" appNumber>
+          <input matInput placeholder="Permanent Labour (In Numbers)" type="number" formControlName="permanentlabour"
+            type="text" [(ngModel)]="agricultureForm.permanentLabour" appNumber>
         </mat-form-field>
       </div>
-      <div class="col-md-4 col-sm-4 col-4">
+      <div class="col-md-3 col-sm-3 col-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Temporary Labour" formControlName="temporarylabour" type="text"
+          <input matInput placeholder="Temporary Labour (In Numbers)" formControlName="temporarylabour" type="text"
             [(ngModel)]="agricultureForm.temporaryLabour" appNumber>
         </mat-form-field>
       </div>

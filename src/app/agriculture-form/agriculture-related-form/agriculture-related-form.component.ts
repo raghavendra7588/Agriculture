@@ -37,6 +37,10 @@ export class AgricultureRelatedFormComponent implements OnInit {
   maxLengthPinCode = 6;
   maxLengthAadharCard = 12;
   maxLengthPanCard = 10;
+  well: any = [];
+  liveStock: any = [];
+  facebookData: any = [];
+  isLiveStockDetails: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -72,6 +76,7 @@ export class AgricultureRelatedFormComponent implements OnInit {
       majorcropoutput: [''],
       smallcropoutput: [''],
       livestock: [''],
+      livestocksdetails: [''],
       tractor: [''],
       make: [''],
       model: [''],
@@ -79,8 +84,13 @@ export class AgricultureRelatedFormComponent implements OnInit {
       capacity: [''],
       trollies: [''],
       permanentlabour: [''],
-      temporarylabour: ['']
+      temporarylabour: [''],
+      facebookselect: [''],
+      facebook: ['']
     });
+    this.saveAgricultureForm.controls.livestocksdetails.disable();
+    this.saveAgricultureForm.controls.facebook.disable();
+    // livestocksdetails
   }
 
   ngOnInit(): void {
@@ -94,6 +104,21 @@ export class AgricultureRelatedFormComponent implements OnInit {
     this.cropType = [
       { id: 0, title: 'Rabbi' },
       { id: 1, title: 'Kharip' }
+    ];
+
+    this.well = [
+      { id: 0, title: 'Yes' },
+      { id: 1, title: 'No' },
+    ];
+
+    this.liveStock = [
+      { id: 0, title: 'Yes' },
+      { id: 1, title: 'No' },
+    ];
+
+    this.facebookData = [
+      { id: 0, title: 'Yes' },
+      { id: 1, title: 'No' },
     ];
   }
 
@@ -239,6 +264,18 @@ export class AgricultureRelatedFormComponent implements OnInit {
     if (this.agricultureForm.temporaryLabour === null || this.agricultureForm.temporaryLabour === undefined || this.agricultureForm.temporaryLabour === '') {
       this.agricultureForm.temporaryLabour = "NULL";
     }
+    if (this.agricultureForm.liveStockDetails === null || this.agricultureForm.liveStockDetails === undefined || this.agricultureForm.liveStockDetails === '') {
+      this.agricultureForm.liveStockDetails = "NULL";
+    }
+
+    if (this.agricultureForm.FaceBookDetails === null || this.agricultureForm.FaceBookDetails === undefined || this.agricultureForm.FaceBookDetails === '') {
+      this.agricultureForm.FaceBookDetails = "NULL";
+    }
+
+    if (this.agricultureForm.FaceBookID === null || this.agricultureForm.FaceBookID === undefined || this.agricultureForm.FaceBookID === '') {
+      this.agricultureForm.FaceBookID = "NULL";
+    }
+
     console.log(this.agricultureForm);
     this.agricultureFormService.insertAgricultureForm(this.agricultureForm).subscribe(response => {
       this.toastr.success('Your Response Is Submitted');
@@ -264,6 +301,35 @@ export class AgricultureRelatedFormComponent implements OnInit {
   }
   selectedTypeFromList(response: any) {
     console.log('selected type from List', response);
+  }
+
+  selectedWellFromList(response: any) {
+    console.log('selected Well from List', response);
+  }
+
+  selectedLiveStockFromList(response: any) {
+    console.log('selected Live Stock from List', response);
+    // title: 'Yes'
+    if (response.title === 'Yes') {
+      this.saveAgricultureForm.controls.livestocksdetails.enable();
+    }
+    if (response.title === 'No') {
+      this.saveAgricultureForm.controls.livestocksdetails.disable();
+      this.agricultureForm.liveStockDetails = '';
+    }
+
+  }
+
+  selectedFacebookFromList(response) {
+    console.log('selected facebook from List', response);
+    if (response.title === 'Yes') {
+      this.saveAgricultureForm.controls.facebook.enable();
+    }
+    if (response.title === 'No') {
+      this.saveAgricultureForm.controls.facebook.disable();
+      this.agricultureForm.FaceBookID = '';
+    }
+
   }
 
   clearValues() {
@@ -301,6 +367,9 @@ export class AgricultureRelatedFormComponent implements OnInit {
     this.agricultureForm.trollies = '';
     this.agricultureForm.permanentLabour = '';
     this.agricultureForm.temporaryLabour = '';
+    this.agricultureForm.FaceBookDetails = '';
+    this.agricultureForm.FaceBookID = '';
+    this.agricultureForm.liveStockDetails = '';
   }
 
 

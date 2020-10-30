@@ -55,7 +55,10 @@ import { NumberDirective } from './number.directive';
     MatDividerModule,
     MatListModule,
     MatCheckboxModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({
+      timeOut: 700,
+      preventDuplicates: true,
+    })
   ],
   exports: [AgricultureRelatedFormComponent, DialogAgricultureRelatedFormComponent],
   // entryComponents: [DialogAgricultureRelatedFormComponent]
