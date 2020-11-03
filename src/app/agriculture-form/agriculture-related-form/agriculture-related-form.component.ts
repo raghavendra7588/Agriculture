@@ -104,7 +104,8 @@ export class AgricultureRelatedFormComponent implements OnInit {
 
     this.cropType = [
       { id: 0, title: 'Rabbi' },
-      { id: 1, title: 'Kharip' }
+      { id: 1, title: 'Kharip' },
+      { id: 2, title: 'Both' },
     ];
 
     this.well = [
