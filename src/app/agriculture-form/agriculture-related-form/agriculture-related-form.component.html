@@ -1,5 +1,5 @@
 <form [formGroup]="saveAgricultureForm" autocomplete="off">
-  <div class="container-fluid mt-4">
+  <div class="container-fluid mt-5">
     <h3 class="font-weight-bold">Your FPO Name</h3>
     <div class="row">
       <div class="col-md-3 col-3 col-sm-3">
@@ -108,21 +108,23 @@
         </mat-form-field>
       </div>
       <div class="col-md-3 col-3 col-sm-3">
-      <mat-form-field style="width:100%;">
-        <mat-select placeholder="Facebook ID Present" formControlName="facebookselect"
-          [(ngModel)]="agricultureForm.FaceBookDetails">
-          <mat-option *ngFor="let item of facebookData;" [value]="item.title" (click)="selectedFacebookFromList(item)">
-            {{item.title}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field style="width:100%;">
+          <mat-select placeholder="Facebook ID Present" formControlName="facebookselect"
+            [(ngModel)]="agricultureForm.FaceBookDetails">
+            <mat-option *ngFor="let item of facebookData;" [value]="item.title"
+              (click)="selectedFacebookFromList(item)">
+              {{item.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    <div class="col-md-3 col-3 col-sm-3">
-      <mat-form-field style="width: 100%;">
-        <input matInput placeholder="Facebook ID" type="text" formControlName="facebook" [(ngModel)]="agricultureForm.FaceBookID">
-      </mat-form-field>
+      <div class="col-md-3 col-3 col-sm-3">
+        <mat-form-field style="width: 100%;">
+          <input matInput placeholder="Facebook ID" type="text" formControlName="facebook"
+            [(ngModel)]="agricultureForm.FaceBookID">
+        </mat-form-field>
+      </div>
     </div>
-</div>
 
   </div>
 
@@ -132,9 +134,17 @@
       <div class="col-md-3 col-3 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Area in Guntha" type="text" formControlName="areainguntha"
-            [(ngModel)]="agricultureForm.areaGuntha">
+            [(ngModel)]="agricultureForm.areaGuntha" (focusout)="gunthaToAcre()" appNumber>
         </mat-form-field>
       </div>
+
+      <div class="col-md-3 col-3 col-sm-3">
+        <mat-form-field style="width: 100%;">
+          <input matInput placeholder="Area in Acre" type="text" formControlName="areainacre"
+            [(ngModel)]="agricultureForm.areaInAcre" readonly>
+        </mat-form-field>
+      </div>
+
       <div class="col-md-3 col-3 col-sm-3">
         <!-- <mat-form-field style="width: 100%;">
           <input matInput placeholder="Well / Vihir" type="text" formControlName="well" [(ngModel)]="agricultureForm.well">
@@ -319,7 +329,7 @@
     </div>
     <div class="row my-5">
       <div class="col-md-2 col-sm-3 col-3">
-        <button mat-raised-button color="primary" class="width-100" (click)="saveForm()"
+        <button mat-raised-button style="background-color: #FF8C00;" class="width-100" (click)="saveForm()"
           [disabled]="!saveAgricultureForm.valid">Save</button>
 
       </div>

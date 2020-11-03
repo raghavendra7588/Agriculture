@@ -4,3 +4,11 @@
 *:focus {
     outline: none;
 }
+mat-toolbar {
+    background: transparent;
+    color: rgba(0,0,0,.87);
+}
+
+button{
+    color: #FF8C00;
+}

@@ -36,4 +36,5 @@ export class AgricultureForm {
     liveStockDetails?: string;
     FaceBookDetails?: string;
     FaceBookID?: string;
+    areaInAcre?: string;
 }

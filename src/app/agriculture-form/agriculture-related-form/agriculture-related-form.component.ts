@@ -86,7 +86,8 @@ export class AgricultureRelatedFormComponent implements OnInit {
       permanentlabour: [''],
       temporarylabour: [''],
       facebookselect: [''],
-      facebook: ['']
+      facebook: [''],
+      areainacre: ['']
     });
     this.saveAgricultureForm.controls.livestocksdetails.disable();
     this.saveAgricultureForm.controls.facebook.disable();
@@ -276,6 +277,11 @@ export class AgricultureRelatedFormComponent implements OnInit {
       this.agricultureForm.FaceBookID = "NULL";
     }
 
+    if (this.agricultureForm.areaInAcre === null || this.agricultureForm.areaInAcre === undefined || this.agricultureForm.areaInAcre === '') {
+      this.agricultureForm.areaInAcre = "NULL";
+    }
+
+
     console.log(this.agricultureForm);
     this.agricultureFormService.insertAgricultureForm(this.agricultureForm).subscribe(response => {
       this.toastr.success('Your Response Is Submitted');
@@ -370,6 +376,7 @@ export class AgricultureRelatedFormComponent implements OnInit {
     this.agricultureForm.FaceBookDetails = '';
     this.agricultureForm.FaceBookID = '';
     this.agricultureForm.liveStockDetails = '';
+    this.agricultureForm.areaInAcre = '';
   }
 
 
@@ -383,5 +390,9 @@ export class AgricultureRelatedFormComponent implements OnInit {
       // this.address.area = pinCodeBasedData.city;
       // this.address.state = pinCodeBasedData.state;
     });
+  }
+
+  gunthaToAcre() {
+    this.agricultureForm.areaInAcre = (Number(this.agricultureForm.areaGuntha) / 40).toString();
   }
 }
