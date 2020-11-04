@@ -395,5 +395,8 @@ export class AgricultureRelatedFormComponent implements OnInit {
 
   gunthaToAcre() {
     this.agricultureForm.areaInAcre = (Number(this.agricultureForm.areaGuntha) / 40).toString();
+    if ((Number(this.agricultureForm.areaGuntha) / 40).toString() == 'NaN') {
+      this.agricultureForm.areaInAcre = '';
+    }
   }
 }
