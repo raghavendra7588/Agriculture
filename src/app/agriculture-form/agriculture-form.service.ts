@@ -6,8 +6,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AgricultureFormService {
   // private BASE_URL = 'http://localhost:55547/';
-  private BASE_URL = 'http://203.112.144.38/uat_InventoryService/';
-  private ADMIN_BASE_URL = 'http://203.112.144.38/uat_AdminApi/api/';
+ 
+
+  private BASE_URL = 'https://3intellects.co.in/uat_InventoryService/';
+  private ADMIN_BASE_URL = 'https://3intellects.co.in/uat_AdminApi/api/';
 
   private INSER_AGRICULTURE_FORM = this.BASE_URL + 'api/AgriCultureForm';
   private GET_ADDRESS_BASED_ON_PINCODE = this.ADMIN_BASE_URL + 'Pincode/GetCityState';
