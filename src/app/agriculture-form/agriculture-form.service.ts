@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgricultureFormService {
-  // private BASE_URL = 'http://localhost:55547/';
- 
 
-  private BASE_URL = 'https://3intellects.co.in/uat_InventoryService/';
-  private ADMIN_BASE_URL = 'https://3intellects.co.in/uat_AdminApi/api/';
 
-  private INSER_AGRICULTURE_FORM = this.BASE_URL + 'api/AgriCultureForm';
-  private GET_ADDRESS_BASED_ON_PINCODE = this.ADMIN_BASE_URL + 'Pincode/GetCityState';
+  // private INSER_AGRICULTURE_FORM = this.BASE_URL + 'api/AgriCultureForm';
+  // private GET_ADDRESS_BASED_ON_PINCODE = this.ADMIN_BASE_URL + 'Pincode/GetCityState';
+
+  private INSER_AGRICULTURE_FORM = environment.BASE_URL + 'api/AgriCultureForm';
+  private GET_ADDRESS_BASED_ON_PINCODE = environment.ADMIN_BASE_URL + 'Pincode/GetCityState';
+
 
   constructor(
     public http: HttpClient
