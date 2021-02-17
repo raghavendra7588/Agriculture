@@ -8,6 +8,7 @@ export class AgricultureForm {
     mobileNo?: string;
     emailId?: string;
     address?: string;
+    area?: string;
     gaon?: string;
     taluka?: string;
     district?: string;
@@ -16,6 +17,9 @@ export class AgricultureForm {
     areaGuntha?: string;
     well?: string;
     waterLevelPerYear?: string;
+    productType?: string;
+    majorcropType?: string;
+    minorcropType?: string;
     cropType?: string;
     noOfTimesInYear?: string;
     majorCrop?: string;
@@ -37,4 +41,5 @@ export class AgricultureForm {
     FaceBookDetails?: string;
     FaceBookID?: string;
     areaInAcre?: string;
+    fpoDistrictName?: string;
 }

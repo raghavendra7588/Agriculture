@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { AgricultureFormModule } from './agriculture-form/agriculture-form.module';
+import { EmitterService } from 'src/app/shared/emitter.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { AgricultureFormModule } from './agriculture-form/agriculture-form.modul
     SharedModule,
     AgricultureFormModule
   ],
-  providers: [],
+  providers: [EmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

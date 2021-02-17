@@ -1,9 +1,13 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmitterService {
 
-  constructor() { }
+  public isLanguageChanged: EventEmitter<boolean>;
+
+  constructor() {
+    this.isLanguageChanged = new EventEmitter();
+  }
 }

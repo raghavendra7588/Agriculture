@@ -28,10 +28,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DialogAgricultureRelatedFormComponent } from './dialog-agriculture-related-form/dialog-agriculture-related-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
-import { NumberDirective } from './number.directive';  
-
+import { NumberDirective } from './number.directive';
+import { MatSelectFilterModule } from 'mat-select-filter';
+import { DialogResponseSavedComponent } from './dialog-response-saved/dialog-response-saved.component';
 @NgModule({
-  declarations: [AgricultureRelatedFormComponent, DialogAgricultureRelatedFormComponent, NumberDirective],
+  declarations: [AgricultureRelatedFormComponent, DialogAgricultureRelatedFormComponent, NumberDirective, DialogResponseSavedComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -55,12 +56,13 @@ import { NumberDirective } from './number.directive';
     MatDividerModule,
     MatListModule,
     MatCheckboxModule,
+    MatSelectFilterModule,
     ToastrModule.forRoot({
       timeOut: 700,
       preventDuplicates: true,
     })
   ],
-  exports: [AgricultureRelatedFormComponent, DialogAgricultureRelatedFormComponent],
-  // entryComponents: [DialogAgricultureRelatedFormComponent]
+  exports: [AgricultureRelatedFormComponent, DialogAgricultureRelatedFormComponent, DialogResponseSavedComponent],
+  entryComponents: [DialogAgricultureRelatedFormComponent, DialogResponseSavedComponent]
 })
 export class AgricultureFormModule { }
