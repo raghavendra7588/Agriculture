@@ -395,7 +395,7 @@
       <div class="col-md-2 col-sm-3 col-3 mb-5">
         <button mat-raised-button style="background-color: #FF8C00;" class="width-100" (click)="saveForm()"
           [ngClass]="!agricultureForm.firstName? 'opacity' : 'noOpacity'"
-          [disabled]="!agricultureForm.firstName  || isClickedOnce">
+          [disabled]="!agricultureForm.firstName || !agricultureForm.emailId || isClickedOnce">
           <span style="color:white">Save</span></button>
 
       </div>
