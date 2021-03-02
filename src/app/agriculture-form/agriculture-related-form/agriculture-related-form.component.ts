@@ -392,7 +392,7 @@ export class AgricultureRelatedFormComponent implements OnInit {
       "facebookEmailid": this.agricultureForm.FaceBookID.toString(),
       "isIndividualFarmerYN": this.isIndividualFarmerYN.toString(),
       "isFPO": "N",
-      "id": this.agricultureForm.smallCropOutput.toString(),
+      "id": '0',
       "password": this.agricultureForm.mobileNo.toString(),
       "role": "Seller",
       "name": this.agricultureForm.firstName.toString() + ' ' + this.agricultureForm.lastName.toString(),
