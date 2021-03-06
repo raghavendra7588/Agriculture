@@ -58,7 +58,7 @@ import { DialogResponseSavedComponent } from './dialog-response-saved/dialog-res
     MatCheckboxModule,
     MatSelectFilterModule,
     ToastrModule.forRoot({
-      timeOut: 700,
+      timeOut: 2000,
       preventDuplicates: true,
     })
   ],

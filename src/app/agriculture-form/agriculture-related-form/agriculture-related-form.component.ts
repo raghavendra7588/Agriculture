@@ -67,6 +67,8 @@ export class AgricultureRelatedFormComponent implements OnInit {
   maxDate: any;
   apiResponse: any;
   isClickedOnce: boolean = false;
+  uniqueNumber: string;
+  selectedDateStr: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -130,13 +132,14 @@ export class AgricultureRelatedFormComponent implements OnInit {
 
     this.emitterService.isLanguageChanged.subscribe(val => {
       if (val) {
-        this.toastr.success('Your Response Is Submitted');
+        this.toastr.success('Your Response Has Been Submitted');
         this.clearValues();
       }
     });
   }
 
   ngOnInit(): void {
+
     this.maxDate = new Date();
     this.getFarmerMasterData();
     this.getAllFpoList();
@@ -171,6 +174,11 @@ export class AgricultureRelatedFormComponent implements OnInit {
 
   saveForm() {
     this.isClickedOnce = true;
+    this.uniqueNumber = (new Date().getTime()).toString();
+    this.selectedDateStr = this.parseDate(new Date());
+    this.uniqueNumber = (this.selectedDateStr + '_' + this.uniqueNumber).toString();
+    console.log('this.uniqueNumber ', this.uniqueNumber);
+
     if (this.agricultureForm.fpo === null || this.agricultureForm.fpo === undefined || this.agricultureForm.fpo === '') {
       this.agricultureForm.fpo = "";
     }
@@ -180,7 +188,9 @@ export class AgricultureRelatedFormComponent implements OnInit {
     }
 
     if (this.agricultureForm.firstName === null || this.agricultureForm.firstName === undefined || this.agricultureForm.firstName === '') {
-      this.agricultureForm.firstName = "";
+      this.toastr.error('First Name Is Mandotary !!');
+      this.isClickedOnce = false;
+      return;
     }
 
     if (this.agricultureForm.lastName === null || this.agricultureForm.lastName === undefined || this.agricultureForm.lastName === '') {
@@ -206,11 +216,14 @@ export class AgricultureRelatedFormComponent implements OnInit {
     }
 
     if (this.agricultureForm.emailId === null || this.agricultureForm.emailId === undefined || this.agricultureForm.emailId === '') {
-      this.agricultureForm.emailId = "";
+      this.agricultureForm.emailId = 'test@' + this.uniqueNumber.toString() + 'test.com';
     }
 
     if (this.agricultureForm.mobileNo === null || this.agricultureForm.mobileNo === undefined || this.agricultureForm.mobileNo === '') {
-      this.agricultureForm.mobileNo = "";
+
+      this.isClickedOnce = false;
+      this.toastr.error('Mobile Number Is Mandotary !!');
+      return;
     }
 
 
@@ -437,10 +450,23 @@ export class AgricultureRelatedFormComponent implements OnInit {
         this.toastr.error(errorMsg);
         this.isClickedOnce = false;
       });
-
+   
   }
+
   valueChanged() {
     let date = new Date(this.agricultureForm.dob);
+    const year = date.getFullYear()
+    const month = `${date.getMonth() + 1}`.padStart(2, "0")
+
+    const day = `${date.getDate()}`.padStart(2, "0")
+
+    const stringDate = [day, month, year].join("/");
+    let fullDate = stringDate;
+    return fullDate
+  }
+
+  parseDate(currentDate) {
+    let date = new Date(currentDate);
     const year = date.getFullYear()
     const month = `${date.getMonth() + 1}`.padStart(2, "0")
 

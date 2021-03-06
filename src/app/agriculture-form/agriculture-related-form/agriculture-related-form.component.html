@@ -43,7 +43,7 @@
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="First Name / पहिले नाव" type="text" formControlName="firstname"
             [(ngModel)]="agricultureForm.firstName">
-          
+
         </mat-form-field>
       </div>
       <div class="col-md-3 col-6 col-sm-3">
@@ -401,8 +401,7 @@
           <span style="color:white">Save</span></button> -->
 
         <button mat-raised-button style="background-color: #FF8C00;" class="width-100" (click)="saveForm()"
-          [ngClass]="!agricultureForm.firstName ||!agricultureForm.emailId || !agricultureForm.mobileNo ? 'opacity' : 'noOpacity'"
-          [disabled]="!agricultureForm.firstName ||!agricultureForm.emailId || !agricultureForm.mobileNo || isClickedOnce">
+          [disabled]="isClickedOnce">
           <span style="color:white">Save</span></button>
 
 
