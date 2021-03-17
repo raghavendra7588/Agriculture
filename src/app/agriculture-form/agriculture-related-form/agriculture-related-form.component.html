@@ -167,7 +167,8 @@
 
       <div class="col-md-3 col-6 col-sm-3">
         <mat-form-field style="width:100%;">
-          <mat-select placeholder="Farm Area / शेत क्षेत्र" formControlName="area" [(ngModel)]="agricultureForm.area">
+          <mat-label [ngClass]="(cropAreaCalculation)?'opacity':'noOpacity'">Farm Area / शेत क्षेत्र</mat-label>
+          <mat-select formControlName="area" [(ngModel)]="agricultureForm.area">
             <mat-option *ngFor="let item of areaData;" [value]="item.name">
               {{item.name}}
             </mat-option>
@@ -178,8 +179,8 @@
 
       <div class="col-md-3 col-6 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Area / क्षेत्र" type="text" formControlName="areainguntha"
-            [(ngModel)]="agricultureForm.areaGuntha" (focusout)="gunthaToAcre()" appNumber>
+          <mat-label [ngClass]="(cropAreaCalculation)?'opacity':'noOpacity'">Area / क्षेत्र</mat-label>
+          <input matInput type="text" formControlName="areainguntha" [(ngModel)]="agricultureForm.areaGuntha" appNumber>
         </mat-form-field>
       </div>
 
@@ -227,66 +228,103 @@
             type="text" [(ngModel)]="agricultureForm.noOfTimesInYear" appNumber>
         </mat-form-field>
       </div>
-      <div class="col-md-3 col-6 col-sm-3">
-        <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Major Crop Name / प्रमुख पीक नाव" type="text" formControlName="majorcrop"
-            [(ngModel)]="agricultureForm.majorCrop">
-        </mat-form-field>
-      </div>
 
       <div class="col-md-3 col-6 col-sm-3">
-
-        <mat-form-field style="width:100%;">
+        <!-- <mat-form-field style="width:100%;">
           <mat-select placeholder="Major Crop Type / प्रमुख पीक प्रकार" formControlName="majorcropType"
             [(ngModel)]="agricultureForm.majorcropType">
             <mat-option *ngFor="let level of majorCropType;" [value]="level.name"
-              (click)="selectedLevelFromList(level)">
+              (onSelectionChange)="selectedMajorCropTypeFromList($event,level)">
               {{level.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field style="width: 100%;">
+          <mat-select placeholder="Major Crop Type / प्रमुख पीक प्रकार" formControlName="majorcropType"
+            [(ngModel)]="agricultureForm.majorcropType" multiple>
+            <mat-option *ngFor="let level of majorCropType;" [value]="level.name"
+              (onSelectionChange)="selectedMajorCropTypeFromList($event,level)">
+              {{level.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div class="col-md-3 col-6 col-sm-3">
+        <mat-form-field style="width: 100%;">
+          <mat-label>Major Crop Name / प्रमुख पीक नाव</mat-label>
+          <mat-select formControlName="majorcrop" [(ngModel)]="agricultureForm.majorCrop" multiple>
+            <mat-option (onSelectionChange)="onMajorCropTypeChange($event,cropName)"
+              *ngFor="let cropName of majorCropNamesArray" [value]="cropName.name">
+              {{cropName.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
+
+
     </div>
     <div class="row">
-      <div class="col-md-3 col-6 col-sm-3">
-        <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Minor / Small Crop Name / किरकोळ / लहान पिकाचे नाव" formControlName="minorcrop"
-            type="text" [(ngModel)]="agricultureForm.minorCrop">
-        </mat-form-field>
-      </div>
 
       <div class="col-md-3 col-6 col-sm-3">
-
-        <mat-form-field style="width:100%;">
+        <!-- <mat-form-field style="width:100%;">
           <mat-select placeholder="Minor Crop Type / किरकोळ पीक प्रकार" formControlName="minorcropType"
             [(ngModel)]="agricultureForm.minorcropType">
             <mat-option *ngFor="let level of minorCropType;" [value]="level.name"
-              (click)="selectedLevelFromList(level)">
+              (onSelectionChange)="selectedMinorCropTypeFromList($event,level)">
               {{level.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field style="width: 100%;">
+          <mat-select placeholder="Minor Crop Type / किरकोळ पीक प्रकार" formControlName="minorcropType"
+            [(ngModel)]="agricultureForm.minorcropType" multiple>
+            <mat-option *ngFor="let level of minorCropType;" [value]="level.name"
+              (onSelectionChange)="selectedMinorCropTypeFromList($event,level)">
+              {{level.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div class="col-md-3 col-6 col-sm-3">
+
+        <mat-form-field style="width: 100%;">
+          <mat-label>Minor / Small Crop Name / किरकोळ / लहान पिकाचे नाव</mat-label>
+          <mat-select formControlName="minorcrop" [(ngModel)]="agricultureForm.minorCrop" multiple>
+            <mat-option (onSelectionChange)="onMinorCropTypeChange($event,cropName)"
+              *ngFor="let cropName of minorCropNamesArray" [value]="cropName.name">
+              {{cropName.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
+      <div class="col-md-3 col-6 col-sm-3">
+        <mat-form-field style="width: 100%;">
+          <mat-label [ngClass]="(cropAreaCalculation)?'opacity':'noOpacity'">Major Crops Area (In Guntha) / प्रमुख पीक
+            क्षेत्र (गुंठा मध्ये)</mat-label>
+          <input matInput formControlName="majorcroparea" type="text" [(ngModel)]="agricultureForm.majorCropArea"
+            appNumber>
+        </mat-form-field>
+      </div>
 
       <div class="col-md-3 col-6 col-sm-3">
         <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Major Crops Area (In Guntha) / प्रमुख पीक क्षेत्र (गुंठा मध्ये)"
-            formControlName="majorcroparea" type="text" [(ngModel)]="agricultureForm.majorCropArea" appNumber>
-        </mat-form-field>
-      </div>
-      <div class="col-md-3 col-6 col-sm-3">
-        <mat-form-field style="width: 100%;">
-          <input matInput placeholder="Small Crops Area (In Guntha) / छोटे पीक क्षेत्र (गुंठा मध्ये)"
-            formControlName="smallcroparea" type="text" [(ngModel)]="agricultureForm.smallCropArea" appNumber>
+          <mat-label [ngClass]="(cropAreaCalculation)?'opacity':'noOpacity'">Small Crops Area (In Guntha) / छोटे पीक
+            क्षेत्र (गुंठा मध्ये)</mat-label>
+          <input matInput formControlName="smallcroparea" type="text" [(ngModel)]="agricultureForm.smallCropArea"
+            appNumber>
         </mat-form-field>
       </div>
     </div>
 
     <div class="row">
-
-
       <div class="col-md-3 col-6 col-sm-3">
         <mat-form-field style="width: 100%;">
           <input matInput placeholder="Major Crops Output (In Ton) / प्रमुख पिकांचे उत्पादन (टन मध्ये)"
@@ -306,7 +344,6 @@
     <h3 class="font-weight-bold">Infrastructure / पायाभूत सुविधा</h3>
     <div class="row">
       <div class="col-md-3 col-6 col-sm-3">
-
         <mat-form-field style="width:100%;">
           <mat-select placeholder="Live Stock / पशूधन" formControlName="livestock"
             [(ngModel)]="agricultureForm.liveStock">
@@ -408,6 +445,7 @@
       </div>
       <div class="col-md-2 col-sm-3 col-6">
         <button mat-raised-button color="warn" class="width-100" (click)="clearValues()">Clear</button>
+
       </div>
     </div>
 

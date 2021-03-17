@@ -69,6 +69,35 @@ export class AgricultureRelatedFormComponent implements OnInit {
   isClickedOnce: boolean = false;
   uniqueNumber: string;
   selectedDateStr: string;
+  totalAreaIntoGuntha: number = 0;
+  totalAreaCalculation: number = 0;
+
+  cropAreaCalculation: boolean = false;
+  majorMinorCrops: any = [];
+
+  majorCropNamesArray: any = [];
+  minorCropNamesArray: any = [];
+
+
+  majorCropNamesIDArr: any = [];
+  minorCropNamesIDArr: any = [];
+
+  commaSepratedMajorCropNames: string = '';
+  commaSepratedMinorCropNames: string = '';
+
+
+  majorCropNames2: any = [];
+  majorCropNames3: any = [];
+
+  minorCropNames2: any = [];
+  minorCropNames3: any = [];
+
+
+  majorCropTypeIDArr: any = [];
+  minorCropTypeIDArr: any = [];
+
+  commaSepratedMajorCropType: string = '';
+  commaSepratedMinorCropType: string = '';
 
   constructor(
     public formBuilder: FormBuilder,
@@ -179,6 +208,46 @@ export class AgricultureRelatedFormComponent implements OnInit {
     this.uniqueNumber = (this.selectedDateStr + '_' + this.uniqueNumber).toString();
     console.log('this.uniqueNumber ', this.uniqueNumber);
 
+
+
+    console.log('Area areaGuntha', this.agricultureForm.areaGuntha);
+    console.log('Area majorCropArea', this.agricultureForm.majorCropArea);
+    console.log('Area smallCropArea', this.agricultureForm.smallCropArea);
+
+    this.totalAreaCalculation = Number(this.agricultureForm.majorCropArea) + Number(this.agricultureForm.smallCropArea);
+    // console.log('this.totalAreaCalculation', this.totalAreaCalculation);
+
+    if (this.agricultureForm.area == 'Acre') {
+      this.totalAreaIntoGuntha = Number(this.agricultureForm.areaGuntha) * 40;
+      console.log(' this.totalAreaIntoGuntha', this.totalAreaIntoGuntha);
+    }
+
+    if (this.agricultureForm.area == 'Guntha') {
+      this.totalAreaIntoGuntha = Number(this.agricultureForm.areaGuntha);
+    }
+
+    if (this.agricultureForm.area == 'Hector') {
+      this.totalAreaIntoGuntha = Number(this.agricultureForm.areaGuntha) * 99;
+      console.log(' this.totalAreaIntoGuntha', this.totalAreaIntoGuntha);
+    }
+
+
+    if (this.totalAreaCalculation > this.totalAreaIntoGuntha) {
+      this.toastr.error('Please Check Farm Area Values');
+      this.cropAreaCalculation = true;
+      this.isClickedOnce = false;
+      return;
+    }
+    else {
+      this.cropAreaCalculation = false;
+    }
+
+
+    ///
+
+    this.isClickedOnce = false;
+
+    ///
     if (this.agricultureForm.fpo === null || this.agricultureForm.fpo === undefined || this.agricultureForm.fpo === '') {
       this.agricultureForm.fpo = "";
     }
@@ -276,9 +345,22 @@ export class AgricultureRelatedFormComponent implements OnInit {
     if (this.agricultureForm.majorCrop === null || this.agricultureForm.majorCrop === undefined || this.agricultureForm.majorCrop === '') {
       this.agricultureForm.majorCrop = "";
     }
+    else {
+      let nonDuplicatemajorCropNamesIDArr = [... new Set(this.majorCropNamesIDArr)];
+      let commaSepratedMajorCropString = nonDuplicatemajorCropNamesIDArr.toString();
+
+      this.commaSepratedMajorCropNames = commaSepratedMajorCropString;
+      console.log(' this.commaSepratedMajorCropNames ', this.commaSepratedMajorCropNames);
+    }
 
     if (this.agricultureForm.minorCrop === null || this.agricultureForm.minorCrop === undefined || this.agricultureForm.minorCrop === '') {
       this.agricultureForm.minorCrop = "";
+    }
+    else {
+      let nonDuplicateminorCropNamesIDArr = [... new Set(this.minorCropNamesIDArr)];
+      let commaSepratedMajorCropString = nonDuplicateminorCropNamesIDArr.toString();
+      this.commaSepratedMinorCropNames = commaSepratedMajorCropString;
+      console.log(' this.commaSepratedMinorCropNames ', this.commaSepratedMinorCropNames);
     }
 
     if (this.agricultureForm.majorCropArea === null || this.agricultureForm.majorCropArea === undefined || this.agricultureForm.majorCropArea === '') {
@@ -357,8 +439,23 @@ export class AgricultureRelatedFormComponent implements OnInit {
     if (this.agricultureForm.majorcropType === null || this.agricultureForm.majorcropType === undefined || this.agricultureForm.majorcropType === '') {
       this.agricultureForm.majorcropType = "";
     }
+    else {
+      let nonDuplicatemajorCropTypeIDArr = [... new Set(this.majorCropTypeIDArr)];
+      let commaSepratedMajorCropTypeString = nonDuplicatemajorCropTypeIDArr.toString();
+
+      this.commaSepratedMajorCropType = commaSepratedMajorCropTypeString;
+      console.log(' this.commaSepratedMajorCropType ', this.commaSepratedMajorCropType);
+    }
+
     if (this.agricultureForm.minorcropType === null || this.agricultureForm.minorcropType === undefined || this.agricultureForm.minorcropType === '') {
       this.agricultureForm.minorcropType = "";
+    }
+    else {
+      let nonDuplicateminorCropTypeIDArr = [... new Set(this.minorCropTypeIDArr)];
+      let commaSepratedMinorCropTypeString = nonDuplicateminorCropTypeIDArr.toString();
+
+      this.commaSepratedMinorCropType = commaSepratedMinorCropTypeString;
+      console.log(' this.commaSepratedMinorCropType ', this.commaSepratedMinorCropType);
     }
 
     if (this.selectedFpoName === 'Individual') {
@@ -379,12 +476,12 @@ export class AgricultureRelatedFormComponent implements OnInit {
       "waterArrangement": this.agricultureForm.well.toString(),
       "type": this.agricultureForm.productType.toString(),
       "cropTimes": this.agricultureForm.noOfTimesInYear.toString(),
-      "majorCropName": this.agricultureForm.majorCrop.toString(),
-      "majorCropType": this.agricultureForm.majorcropType.toString(),
+      "majorCropName": this.commaSepratedMajorCropNames.toString(),
+      "majorCropType": this.commaSepratedMajorCropType.toString(),
       "majorCropArea": this.agricultureForm.majorCropArea.toString(),
       "majorCropExpectedOutput": this.agricultureForm.majorCropOutput.toString(),
-      "minorCropName": this.agricultureForm.minorCrop.toString(),
-      "minorCropType": this.agricultureForm.minorcropType.toString(),
+      "minorCropName": this.commaSepratedMinorCropNames.toString(),
+      "minorCropType": this.commaSepratedMinorCropType.toString(),
       "minorCropArea": this.agricultureForm.smallCropArea.toString(),
       "minorCropExpectedOutput": this.agricultureForm.smallCropOutput.toString(),
       "isLiveStockYN": this.agricultureForm.liveStock.toString(),
@@ -435,8 +532,8 @@ export class AgricultureRelatedFormComponent implements OnInit {
       else {
         this.dialog.open(DialogResponseSavedComponent, {
           disableClose: true,
-          height: '220px',
-          width: '400px',
+          height: '307px',
+          width: '500px',
         });
         this.clearValues();
       }
@@ -450,7 +547,7 @@ export class AgricultureRelatedFormComponent implements OnInit {
         this.toastr.error(errorMsg);
         this.isClickedOnce = false;
       });
-   
+
   }
 
   valueChanged() {
@@ -477,8 +574,192 @@ export class AgricultureRelatedFormComponent implements OnInit {
     return fullDate
   }
 
-  selectedLevelFromList(response: any) {
-    // console.log('selected level from List', response);
+  selectedMajorCropTypeFromList(event, response: any) {
+    if (event.isUserInput) {
+      if (event.source.selected) {
+        console.log('selectedMajorCropTypeFromList', response);
+
+        if (this.majorCropTypeIDArr.includes(response.id)) {
+          return;
+        }
+        else {
+          this.majorCropTypeIDArr.push(response.id);
+          console.log(' this.majorCropTypeIDArr', this.majorCropTypeIDArr);
+        }
+
+
+        if (this.majorCropNamesArray.length === 0) {
+          this.majorCropNamesArray = this.majorMinorCrops.filter(item => {
+            return Number(item.SubCategoryId) == Number(response.id)
+          });
+        }
+        else {
+
+          this.majorCropNames2 = this.majorMinorCrops.filter(item => {
+            return Number(item.SubCategoryId) == Number(response.id)
+          });
+          this.majorCropNames3 = [...this.majorCropNamesArray, ...this.majorCropNames2];
+          this.majorCropNamesArray = this.majorCropNames3;
+        }
+
+
+        // console.log('majorCropNamesArray', this.majorCropNamesArray);
+
+        let uniqueMajorProductNames = this.createUniqueProductName(this.majorCropNamesArray);
+        // console.log('uniqueProductNames', uniqueMajorProductNames);
+        this.majorCropNamesArray = uniqueMajorProductNames;
+
+      }
+    }
+    if (!event.source.selected) {
+      let removedMajorCropName = this.majorCropNamesArray.filter(item => {
+        return Number(item.SubCategoryId) != Number(response.id)
+      });
+      this.majorCropNamesArray = removedMajorCropName;
+      let uniqueMajorProductNames = this.createUniqueProductName(this.majorCropNamesArray);
+      // console.log('uniqueMajorProductNames', uniqueMajorProductNames);
+      this.majorCropNamesArray = uniqueMajorProductNames;
+
+      if (this.majorCropTypeIDArr.length == 0) {
+        this.majorCropNamesArray = [];
+        this.agricultureForm.majorCrop = '';
+        this.majorCropNamesIDArr = [];
+      }
+
+
+      console.log('before unselect', this.majorCropTypeIDArr);
+      let unSelectedMajorCropType = this.majorCropTypeIDArr.filter(e => e != response.id);
+      console.log('unSelectedMajorCropType unselect', unSelectedMajorCropType);
+      this.majorCropTypeIDArr = unSelectedMajorCropType;
+    }
+
+  }
+
+
+  selectedMinorCropTypeFromList(event, response: any) {
+    console.log('selectedMajorCropTypeFromList', response);
+
+
+
+    if (event.isUserInput) {
+      if (event.source.selected) {
+
+        if (this.minorCropTypeIDArr.includes(response.id)) {
+          return;
+        }
+        else {
+          this.minorCropTypeIDArr.push(response.id);
+          console.log(' this.minorCropTypeIDArr', this.minorCropTypeIDArr);
+        }
+
+        // console.log('selectedMajorCropTypeFromList', response);
+        if (this.minorCropNamesArray.length === 0) {
+          this.minorCropNamesArray = this.majorMinorCrops.filter(item => {
+            return Number(item.SubCategoryId) == Number(response.id)
+          });
+        }
+        else {
+          this.minorCropNames2 = this.majorMinorCrops.filter(item => {
+            return Number(item.SubCategoryId) == Number(response.id)
+          });
+          this.minorCropNames3 = [...this.minorCropNamesArray, ...this.minorCropNames2];
+          this.minorCropNamesArray = this.minorCropNames3;
+        }
+        // console.log('minorCropNamesArray', this.minorCropNamesArray);
+        let uniqueMinorProductNames = this.createUniqueProductName(this.minorCropNamesArray);
+        // console.log('uniqueProductNames', uniqueMinorProductNames);
+
+        this.minorCropNamesArray = uniqueMinorProductNames;
+
+      }
+    }
+
+    if (!event.source.selected) {
+      let removedMinorCropName = this.minorCropNamesArray.filter(item => {
+        return Number(item.SubCategoryId) != Number(response.id)
+      });
+      this.minorCropNamesArray = removedMinorCropName;
+      let uniqueMinorProductNames = this.createUniqueProductName(this.minorCropNamesArray);
+      // console.log('uniqueMinorProductNames', uniqueMinorProductNames);
+      this.minorCropNamesArray = uniqueMinorProductNames;
+
+      if (this.minorCropTypeIDArr.length == 0) {
+        this.minorCropNamesArray = [];
+        this.agricultureForm.minorCrop = '';
+        this.minorCropNamesIDArr = [];
+      }
+      console.log('before unselect', this.minorCropTypeIDArr);
+      let unSelectedMajorCropType = this.minorCropTypeIDArr.filter(e => e != response.id);
+      console.log('unSelectedMajorCropType unselect', unSelectedMajorCropType);
+      this.minorCropTypeIDArr = unSelectedMajorCropType;
+
+
+    }
+
+  }
+
+
+ 
+
+  onMajorCropTypeChange(event, majorCrop) {
+    if (event.isUserInput) {
+      if (event.source.selected) {
+
+        if (this.majorCropNamesIDArr.includes(majorCrop.id)) {
+          return;
+        }
+        else {
+          this.majorCropNamesIDArr.push(majorCrop.id);
+          console.log(' this.majorCropNamesIDArr', this.majorCropNamesIDArr);
+        }
+
+
+      }
+    }
+    if (!event.source.selected) {
+
+      console.log('before unselect', this.majorCropNamesIDArr);
+      let unSelectedMajorCropName = this.majorCropNamesIDArr.filter(e => e != majorCrop.id);
+      console.log('unSelectedMajorCropName unselect', unSelectedMajorCropName);
+      this.majorCropNamesIDArr = unSelectedMajorCropName;
+    }
+
+  }
+
+  onMinorCropTypeChange(event, minorCrop) {
+    if (event.isUserInput) {
+      if (event.source.selected) {
+        console.log('minorCrop select', minorCrop);
+
+        if (this.minorCropNamesIDArr.includes(minorCrop.id)) {
+          return;
+        }
+        else {
+          this.minorCropNamesIDArr.push(minorCrop.id);
+          console.log(' this.minorCropNamesIDArr', this.minorCropNamesIDArr);
+        }
+      }
+    }
+    if (!event.source.selected) {
+      console.log('minorCrop unselect', minorCrop);
+      let unSelectedMinorCropName = this.minorCropNamesIDArr.filter(e => e != minorCrop.id);
+      console.log('unSelectedMinorCropName unselect', unSelectedMinorCropName);
+      this.minorCropNamesIDArr = unSelectedMinorCropName;
+    }
+
+  }
+  createUniqueProductName(array: any) {
+
+    let sortedArray: Array<any> = [];
+    for (let i = 0; i < array.length; i++) {
+      if ((sortedArray.findIndex(p => p.name.trim() == array[i].name.trim())) == -1) {
+        let item = {
+          SubCategoryId: array[i].SubCategoryId, id: array[i].id, name: array[i].name.toString()
+        }
+        sortedArray.push(item);
+      }
+    }
+    return sortedArray;
   }
   selectedTypeFromList(response: any) {
     // console.log('selected type from List', response);
@@ -558,6 +839,23 @@ export class AgricultureRelatedFormComponent implements OnInit {
     this.agricultureForm.majorcropType = '';
     this.agricultureForm.minorcropType = '';
     this.districtJSON = this.prevDistrictJSON;
+    this.cropAreaCalculation = false;
+    this.commaSepratedMajorCropNames = '';
+    this.commaSepratedMinorCropNames = '';
+    this.majorCropNamesArray = [];
+    this.minorCropNamesArray = [];
+    this.majorCropNamesIDArr = [];
+    this.minorCropNamesIDArr = [];
+    this.commaSepratedMajorCropNames = '';
+    this.commaSepratedMinorCropNames = '';
+    this.majorCropNames2 = [];
+    this.majorCropNames3 = [];
+    this.minorCropNames2 = [];
+    this.minorCropNames3 = [];
+    this.commaSepratedMinorCropType = '';
+    this.commaSepratedMajorCropType = '';
+    this.majorCropTypeIDArr = [];
+    this.minorCropTypeIDArr = [];
   }
 
 
@@ -602,6 +900,9 @@ export class AgricultureRelatedFormComponent implements OnInit {
 
       this.majorCropType = this.farmerMasterData.CropType;
       this.minorCropType = this.farmerMasterData.CropType;
+
+      this.majorMinorCrops = this.farmerMasterData.MajorMinorCrops;
+      console.log('this.majorMinorCrops', this.majorMinorCrops);
     });
   }
 
@@ -617,6 +918,7 @@ export class AgricultureRelatedFormComponent implements OnInit {
       this.saveAgricultureForm.controls.model.disable();
       this.saveAgricultureForm.controls.yearofpurchase.disable();
       this.saveAgricultureForm.controls.capacity.disable();
+
     }
   }
 
@@ -703,6 +1005,12 @@ export class AgricultureRelatedFormComponent implements OnInit {
     this.fpoList.push(indivudualFpo);
     return this.fpoList;
   }
-
+  // openDialog() {
+  //   this.dialog.open(DialogResponseSavedComponent, {
+  //     disableClose: true,
+  //     height: '307px',
+  //     width: '500px',
+  //   });
+  // }
 
 }

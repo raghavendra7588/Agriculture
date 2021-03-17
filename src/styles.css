@@ -9,6 +9,7 @@ table {
 
   .opacity {
     opacity: 0.7;
+    color:red;
   }
   
   .noOpacity {
